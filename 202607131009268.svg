@@ -1,0 +1,127 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="760" viewBox="0 0 1280 760">
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M2,2 L10,6 L2,10 Z" fill="#2f5f8f"/>
+    </marker>
+    <style>
+      .title { font: 700 34px "PingFang SC", "Microsoft YaHei", Arial, sans-serif; fill: #16212f; }
+      .subtitle { font: 500 18px "PingFang SC", "Microsoft YaHei", Arial, sans-serif; fill: #5f6f82; }
+      .step { font: 700 24px "PingFang SC", "Microsoft YaHei", Arial, sans-serif; fill: #16212f; }
+      .label { font: 500 16px "PingFang SC", "Microsoft YaHei", Arial, sans-serif; fill: #334155; }
+      .small { font: 500 14px "PingFang SC", "Microsoft YaHei", Arial, sans-serif; fill: #64748b; }
+      .code { font: 700 15px "SFMono-Regular", Consolas, monospace; fill: #1e3a5f; }
+      .panel { fill: #ffffff; stroke: #d7dee8; stroke-width: 2; rx: 16; }
+      .axis { stroke: #8a99aa; stroke-width: 2; }
+      .grid { stroke: #e8edf3; stroke-width: 1; }
+      .blue { stroke: #1769aa; }
+      .red { stroke: #c84646; }
+      .green { stroke: #287a4f; }
+      .amber { stroke: #a66a00; }
+    </style>
+  </defs>
+
+  <rect x="0" y="0" width="1280" height="760" fill="#f4f7fb"/>
+
+  <text x="640" y="52" text-anchor="middle" class="title">增量调制 DM 示意图</text>
+  <text x="640" y="84" text-anchor="middle" class="subtitle">Delta Modulation：发送初始值，然后发送相邻样本之间的变化量</text>
+
+  <rect x="38" y="125" width="275" height="430" class="panel"/>
+  <rect x="353" y="125" width="275" height="430" class="panel"/>
+  <rect x="668" y="125" width="275" height="430" class="panel"/>
+  <rect x="983" y="125" width="260" height="430" class="panel"/>
+
+  <line x1="316" y1="340" x2="349" y2="340" stroke="#2f5f8f" stroke-width="4" marker-end="url(#arrow)"/>
+  <line x1="631" y1="340" x2="664" y2="340" stroke="#2f5f8f" stroke-width="4" marker-end="url(#arrow)"/>
+  <line x1="946" y1="340" x2="979" y2="340" stroke="#2f5f8f" stroke-width="4" marker-end="url(#arrow)"/>
+
+  <!-- Step 1 -->
+  <text x="175.5" y="166" text-anchor="middle" class="step">1. 模拟信号</text>
+  <text x="175.5" y="194" text-anchor="middle" class="small">连续变化的原始信号</text>
+  <g transform="translate(68,228)">
+    <line x1="0" y1="135" x2="210" y2="135" class="axis"/>
+    <line x1="0" y1="20" x2="0" y2="250" class="axis"/>
+    <path d="M0,160
+             C22,95 42,72 64,92
+             C86,112 96,188 120,188
+             C146,188 148,78 174,68
+             C192,61 202,94 210,116"
+          fill="none" class="blue" stroke-width="5"/>
+    <text x="196" y="158" class="small">t</text>
+    <text x="10" y="34" class="small">幅度</text>
+  </g>
+  <text x="175.5" y="520" text-anchor="middle" class="label">例如：声音或传感器信号</text>
+
+  <!-- Step 2 -->
+  <text x="490.5" y="166" text-anchor="middle" class="step">2. 采样</text>
+  <text x="490.5" y="194" text-anchor="middle" class="small">定时测量信号值</text>
+  <g transform="translate(383,228)">
+    <line x1="0" y1="135" x2="210" y2="135" class="axis"/>
+    <line x1="0" y1="20" x2="0" y2="250" class="axis"/>
+    <path d="M0,160
+             C22,95 42,72 64,92
+             C86,112 96,188 120,188
+             C146,188 148,78 174,68
+             C192,61 202,94 210,116"
+          fill="none" stroke="#9bb8d2" stroke-width="4"/>
+    <g class="red" stroke-width="2">
+      <line x1="18" y1="135" x2="18" y2="122"/>
+      <line x1="45" y1="135" x2="45" y2="78"/>
+      <line x1="72" y1="135" x2="72" y2="99"/>
+      <line x1="99" y1="135" x2="99" y2="174"/>
+      <line x1="126" y1="135" x2="126" y2="185"/>
+      <line x1="153" y1="135" x2="153" y2="94"/>
+      <line x1="180" y1="135" x2="180" y2="69"/>
+      <line x1="207" y1="135" x2="207" y2="111"/>
+    </g>
+    <g fill="#c84646">
+      <circle cx="18" cy="122" r="6"/>
+      <circle cx="45" cy="78" r="6"/>
+      <circle cx="72" cy="99" r="6"/>
+      <circle cx="99" cy="174" r="6"/>
+      <circle cx="126" cy="185" r="6"/>
+      <circle cx="153" cy="94" r="6"/>
+      <circle cx="180" cy="69" r="6"/>
+      <circle cx="207" cy="111" r="6"/>
+    </g>
+    <text x="105" y="277" text-anchor="middle" class="code">样本：5, 7, 6, 3, 3, 6, 7, 5</text>
+  </g>
+  <text x="490.5" y="520" text-anchor="middle" class="label">得到连续样本序列</text>
+
+  <!-- Step 3 -->
+  <text x="805.5" y="166" text-anchor="middle" class="step">3. 计算增量</text>
+  <text x="805.5" y="194" text-anchor="middle" class="small">不传完整值，只传变化量</text>
+  <g transform="translate(690,220)">
+    <rect x="0" y="0" width="230" height="270" rx="12" fill="#eef5fa" stroke="#c8d8e8"/>
+    <text x="18" y="38" class="code">初始值：5</text>
+    <line x1="18" y1="56" x2="210" y2="56" stroke="#b7cadc"/>
+    <text x="18" y="88" class="code">7 - 5 = +2</text>
+    <text x="18" y="120" class="code">6 - 7 = -1</text>
+    <text x="18" y="152" class="code">3 - 6 = -3</text>
+    <text x="18" y="184" class="code">3 - 3 =  0</text>
+    <text x="18" y="216" class="code">6 - 3 = +3</text>
+    <text x="18" y="248" class="code">7 - 6 = +1</text>
+  </g>
+  <text x="805.5" y="520" text-anchor="middle" class="label">发送差值而非完整样本</text>
+
+  <!-- Step 4 -->
+  <text x="1113" y="166" text-anchor="middle" class="step">4. 输出码流</text>
+  <text x="1113" y="194" text-anchor="middle" class="small">用少量比特表示增量</text>
+  <g transform="translate(1010,225)">
+    <rect x="0" y="0" width="205" height="270" rx="12" fill="#fff7e8" stroke="#e4c78c"/>
+    <text x="22" y="38" class="code">初始：101</text>
+    <line x1="18" y1="56" x2="187" y2="56" stroke="#d7ba77"/>
+    <text x="22" y="88" class="code">+2 → 10</text>
+    <text x="22" y="120" class="code">-1 → 01</text>
+    <text x="22" y="152" class="code">-3 → 00</text>
+    <text x="22" y="184" class="code"> 0 → 11</text>
+    <text x="22" y="216" class="code">+3 → 10</text>
+    <text x="22" y="248" class="code">+1 → 10</text>
+  </g>
+  <text x="1113" y="520" text-anchor="middle" class="label">比传完整样本更省比特</text>
+
+  <!-- Rebuild diagram -->
+  <rect x="110" y="592" width="1060" height="120" rx="18" fill="#ffffff" stroke="#d7dee8" stroke-width="2"/>
+  <text x="640" y="628" text-anchor="middle" class="step">DM 核心思想</text>
+  <text x="640" y="662" text-anchor="middle" class="label">先发送一个初始值，之后只发送当前样本与前一个样本之间的差异。</text>
+  <text x="640" y="692" text-anchor="middle" class="small">优点：码流较短；缺点：若某个增量丢失或损坏，后续还原值可能连续出错。</text>
+</svg>
